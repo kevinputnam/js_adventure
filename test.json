@@ -1,0 +1,165 @@
+{ "things":
+  {"0":{
+  "name": "plant",
+  "hidden": false,
+  "description": "It might be a coffee plant. Definitely needs water. It looks like it is sitting a bit unevenly.",
+  "canTake": true,
+  "locks": false,
+  "goesTo": null,
+  "isAttack": false,
+  "fight": false,
+  "prompts": [],
+  "responses": [],
+  "inventory": {},
+  "interactions": {
+    "move" : { "interacted" : false,
+               "action" : "You move the plant.",
+               "requires" : null,
+               "effects" : [[1,"set",["hidden",false]]],
+               "description" : "The pot scrapes against the floor as you slide it, revealing a key."}
+  }
+},
+"1": {
+  "name":"key",
+  "description" : "It's rusty, and it doesn't look like it belongs to a door.",
+  "hidden" : true,
+  "canTake" : true
+},
+"2":{ "name": "dresser",
+      "description":"Uncle Henry painted it for you. Why he chose to make itpink is beyond you, but there you have it."},
+"3":{"name":"door",
+     "description":"It leads to the den.",
+     "goesTo":[0,1]},
+"4":{"name":"bed",
+     "description":"It's lumpy and piled with pillows and quilts. Not what you expected, but you got used to it."},
+"5":{"name":"poster",
+     "description":"Let's Rock! It might have been cool once, but even that is debatable. Now it's just cringy."},
+"6":{"name": "TV",
+     "description": "The size of a cabinet, Uncle Henry likes his TV old school. Still,\nthere are plenty of interesting things to watch here."},
+"7":{"name": "door",
+     "description": "The door to your room.",
+     "goesTo": [0,0]},
+"8":{"name": "couch",
+     "description": "It smells funny, and beware of sinking fully into it.",
+     "interactions": {
+        "move": {"interacted": false,
+                 "action": "You rummage around in the cushions.",
+                 "requires": null,
+                 "effects": [[12,"set",["hidden",false]]],
+                 "description": "You uncover some coins."}
+               }
+            },
+"9":{
+               "name": "remote",
+               "description": "Lots of buttons. Possession of the remote is a power move unlike any\nother."
+            },
+"10":{
+               "name": "cabinet",
+               "description": "I wonder what is in there.",
+               "interactions": {
+                  "open": {
+                     "interacted": false,
+                     "action": "You unlock and open the cabinet.",
+                     "requires": [
+                        "inventory",
+                        "key"
+                     ],
+                     "requiresFail": "Looks like you need a key to open it.",
+                     "effects": [
+                        [
+                           "puzzles",
+                           "set",
+                           [
+                              "hidden",
+                              false
+                           ]
+                        ]
+                     ],
+                     "description": "The key turns in the lock allowing you to open the cabinet. There's a bunch of puzzles inside."
+                  }
+               }
+            },
+"11":{
+               "name": "puzzles",
+               "description": "They're old and dusty, but someone would probably enjoy them.",
+               "hidden": true,
+               "canTake": true
+            },
+"12":{
+               "name": "coins",
+               "description": "They probably fell out of someone's pocket.",
+               "hidden": true,
+               "canTake": true
+            },
+"13":{
+               "name": "kitchen",
+               "description": "Something smells good in there.",
+               "goesTo": [0,2]
+            },
+"14":{
+               "name": "den",
+               "description": "I think I can hear the TV in there.",
+               "goesTo": [0,1]
+            },
+"15":{
+               "name": "cabinet",
+               "description": "Under the sink. There's probably a garbage can in there.",
+               "interactions": {
+                  "open": {
+                     "interacted": false,
+                     "action": "You open the cabinet.",
+                     "requires": null,
+                     "effects": [
+                        [
+                           "passage",
+                           "set",
+                           [
+                              "hidden",
+                              false
+                           ]
+                        ]
+                     ],
+                     "description": "And discover a secret passage. Wonder where it goes."
+                  }
+               }
+            },
+"16":{
+               "name": "passage",
+               "description": "Lined with bricks, there appears to be a light at the other end.",
+               "hidden": true,
+               "goesTo": [0,3]
+            },
+"17":{
+               "name": "potatoes",
+               "description": "A sack overflowing with eyed potatoes. Are they looking at me?",
+               "canTake": true
+            },
+"18":{
+               "name": "kitchen",
+               "description": "It's a steep climb, but you can probably make it.",
+               "goesTo": [0,2]
+            }
+},
+"sections":{
+  "0":{"locations":{
+    "0":{
+      "name":"your bed room",
+      "description":"It isn't much, but it's yours.",
+      "things":[0,1,2,3,4,5]
+    },
+    "1":{
+      "name":"the den",
+      "description":"The TV is here. It is therefore the most interesting room in the apartment.",
+      "things":[6,7,8,9,10,11,12,13]
+    },
+    "2":{"name":"kitchen",
+         "description": "This is where the magic happens.",
+         "things": [14,15,16]
+       },
+    "3":{"name":"cellar",
+         "description": "It smells of earth and ancient vegetables.",
+         "things": [17,18]
+       }
+  }}
+}
+}

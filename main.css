@@ -1,0 +1,80 @@
+html {
+    background-color: #555555;
+}
+
+.adventure {
+    position: relative;
+    background-color: #000000;
+    color: #fcba03;
+    font: 12px/14px sans-serif;
+    width:1000px; /* or whatever width you want. */
+    max-width:1000px; /* or whatever width you want. */
+    height: 600px;
+    max-height:  600px;
+    padding: 10px;
+}
+
+.interfacetitle {
+    font-size:  18px;
+}
+
+#titlebox {
+    overflow:  hidden;
+    position: absolute;
+    left: 10px;
+    top:  10px;
+    width: 980px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 980px;
+    border:  1px solid #fcba03;
+    padding:  10px;
+}
+
+#title {
+    font-size: 18px;
+}
+
+#gametext {
+    overflow:  scroll;
+    position: absolute;
+    left: 10px;
+    top:  140px;
+    width: 350px;
+    height: 450px;
+    max-height: 450px;
+    max-width: 350px;
+    border:  1px solid #fcba03;
+    padding:  10px;
+    -ms-overflow-style: none; /*hides scroll bars for ms browsers*/
+    scrollbar-width: none; /*hides scroll bars for firefox*/
+}
+
+#gametext::-webkit-scrollbar {
+    display: none; /*hides scroll bars for webkit browsers*/
+}
+
+#image {
+    overflow: scroll;
+    position: absolute;
+    left: 390px;
+    top: 140px;
+    height: 470px;
+    width: 620px;
+    max-height: 470px;
+    max-width: 620px;
+    border:  1px solid #fcba03;
+    -ms-overflow-style: none; /*hides scroll bars for ms browsers*/
+    scrollbar-width: none; /*hides scroll bars for firefox*/
+}
+
+#image::-webkit-scrollbar {
+    display:none; /*hides scroll bars for webkit browsers*/
+}
+
+img {
+
+    vertical-align: middle;
+    min-width: 100%;
+/*    min-height: 470px;*/
+}
