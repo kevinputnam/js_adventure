@@ -9,15 +9,17 @@ class Thing {
     this.goesTo = null;
     this.isAttack = false;
     this.fight = false;
-    this.prompts = [];
-    this.responses = [];
-    this.inventory = {};
+    this.inventory = [];
     this.interactions = {};
   }
 
   load(properties){
     for (const [key,value] of Object.entries(properties)){
-      this[key] = value;
+      if(key == "interactions"){
+        this.load_interactions(value);
+      }else{
+        this[key] = value;
+      }
     }
     if (! this.name || ! this.description) {
       return false;
@@ -32,37 +34,36 @@ class Thing {
     return this.description;
   }
 
-  interact(interaction, inventory, things){
-    if (interaction in this.interactions){
-      console.log("Interaction: " + interaction);
-      var i = this.interactions[interaction];
-    }else{
-      return "I'd rather not.";
-    }
-
-    if (i.interacted){
-      return "Not again ...";
-    } else {
-      if (i.requires){
-        console.log("ToDo");
-      }
-      if (i.effects){
-        for (const e of i.effects){
-          var eid = e[0];
-          var emethod = e[1];
-          var eargs = e[2];
-          if (eid in things){
-            i.interacted = true;
-            //call method with args on target thing
-            things[eid][emethod](...eargs);
-            return i.action + "\n" + i.description;
-          }
-        }
-      }
-    }
-  }
-
   go(){
     return this.goesTo;
+  }
+
+  get_interactions(){
+    return Object.keys(this.interactions);
+  }
+
+  load_interactions(ints){
+    for (const [key,value] of Object.entries(ints)){
+      var i = new Interaction;
+      i.load(value);
+      this.interactions[key] = i;
+    }
+  }
+}
+
+class Interaction {
+  constructor(){
+    this.interacted = false;
+    this.action = "";
+    this.requires = null;
+    this.requiresFail = "";
+    this.effects = [];
+    this.description = "";
+  }
+
+  load(properties){
+    for (const[key,value] of Object.entries(properties)){
+      this[key] = value;
+    }
   }
 }
