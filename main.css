@@ -2,11 +2,11 @@ html {
     background-color: #555555;
 }
 
-.adventure {
+.game {
     position: relative;
     background-color: #000000;
-    color: #fcba03;
-    font: 12px/14px sans-serif;
+    color: #03fc3d;
+    font: 12px/14px monospace;
     width:1000px; /* or whatever width you want. */
     max-width:1000px; /* or whatever width you want. */
     height: 600px;
@@ -27,7 +27,7 @@ html {
     height: 100px;
     max-height: 100px;
     max-width: 980px;
-    border:  1px solid #fcba03;
+    border:  1px solid #03fc3d;
     padding:  10px;
 }
 
@@ -35,23 +35,58 @@ html {
     font-size: 18px;
 }
 
-#gametext {
+#gameoutput {
     overflow:  scroll;
     position: absolute;
     left: 10px;
-    top:  140px;
-    width: 350px;
-    height: 450px;
-    max-height: 450px;
-    max-width: 350px;
-    border:  1px solid #fcba03;
+    top:  380px;
+    width: 980px;
+    height: 160px;
+    max-height: 160px;
+    max-width: 980px;
+    border:  1px solid #03fc3d;
     padding:  10px;
     -ms-overflow-style: none; /*hides scroll bars for ms browsers*/
     scrollbar-width: none; /*hides scroll bars for firefox*/
 }
 
-#gametext::-webkit-scrollbar {
+#gameoutput::-webkit-scrollbar {
     display: none; /*hides scroll bars for webkit browsers*/
+}
+
+#locationdescription {
+    overflow:  scroll;
+    position: absolute;
+    left: 10px;
+    top:  140px;
+    width: 980px;
+    height: 210px;
+    max-height: 210px;
+    max-width: 980px;
+    border:  1px solid #03fc3d;
+    padding:  10px;
+    -ms-overflow-style: none; /*hides scroll bars for ms browsers*/
+    scrollbar-width: none; /*hides scroll bars for firefox*/
+}
+
+#gameinput {
+    position: absolute;
+    left: 10px;
+    top:  570px;
+    width: 980px;
+    height: 20px;
+    max-height: 20px;
+    max-width: 980px;
+    border:  1px solid #03fc3d;
+    padding:  10px;
+}
+
+#commandline {
+    border:  none;
+    background-color: #000000;
+    color: #03fc3d;
+    font: 12px/14px monospace;
+    outline:  none;
 }
 
 #image {

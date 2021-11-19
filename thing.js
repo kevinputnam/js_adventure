@@ -9,8 +9,11 @@ class Thing {
     this.goesTo = null;
     this.isAttack = false;
     this.fight = false;
-    this.inventory = [];
+    this.things = [];
     this.interactions = {};
+    this.takeInteraction = null;
+    this.goInteraction = null;
+    this.location=[];
   }
 
   load(properties){
@@ -39,7 +42,25 @@ class Thing {
   }
 
   get_interactions(){
-    return Object.keys(this.interactions);
+    var interactions = ['look'];
+    if (this.canTake){
+      interactions.push('take');
+    }
+    if (this.goesTo){
+      interactions.push('go');
+    }
+    var talk = false;
+    for (const [key,value] of Object.entries(this.interactions)){
+      if(value.type == "talk"){
+        talk = true;
+      }else{
+        interactions.push(key);
+      }
+    }
+    if(talk){
+      interactions.push('talk');
+    }
+    return interactions;
   }
 
   load_interactions(ints){
@@ -59,6 +80,7 @@ class Interaction {
     this.requiresFail = "";
     this.effects = [];
     this.description = "";
+    this.type = "";
   }
 
   load(properties){

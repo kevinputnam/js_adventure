@@ -9,11 +9,11 @@
     "canTake": true,
     "locks": false,
     "goesTo": null,
+    "takeInteraction":"move",
     "isAttack": false,
     "fight": false,
     "prompts": [],
     "responses": [],
-    "inventory": {},
     "interactions": {
       "move" : { "interacted" : false,
                "action" : "You move the plant.",
@@ -63,7 +63,7 @@
                   "open": {
                      "interacted": false,
                      "action": "You unlock and open the cabinet.",
-                     "requires": ["inventory",1],
+                     "requires": ["things",1],
                      "requiresFail": "Looks like you need a key to open it.",
                      "effects": [["set",[11,"hidden",false]]],
                      "description": "The key turns in the lock allowing you to open the cabinet. There's a bunch of puzzles inside."
@@ -128,16 +128,18 @@
       "location":[0,2],
       "interactions": {
         "say,\"How are you?\"": {
+          "type": "talk",
           "description": "He says, \"Well, I'd be better if you made dinner.\""
         },
         "say, \"Can I go to the cellar?\"": {
+          "type": "talk",
           "description":"He says, \"Sure. If you can find it.\""
         }
 
       }
     },
   "20":{
-    "name":"Dante",
+    "name":"Willow",
     "isCharacter":true,
     "isPlayer":true,
     "hp": 25,
@@ -145,6 +147,18 @@
     "description":"Looking for the end of the circle.",
     "skills": {
       "elven": 2
+    }
+  },
+  "21":{
+    "name":"sign",
+    "description":"It says something in a strange language.",
+    "interactions":{
+      "translate": {
+        "action":"You decipher the elven script.",
+        "requires":["skill","elven",2],
+        "requiresFail":"You can't read it, but it might be in elven (2).",
+        "effects":[["set",[21,"description","'It says, \"the grumpy horseman likes to talk.\""]]]
+      }
     }
   }
   },
@@ -159,7 +173,7 @@
       "1":{
         "name":"the den",
         "description":"The TV is here. It is therefore the most interesting room in the apartment.",
-        "things":[6,7,8,9,10,11,12,13]
+        "things":[6,7,8,9,10,11,12,13,21]
       },
       "2":{"name":"kitchen",
            "description": "This is where the magic happens.",

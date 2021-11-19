@@ -7,5 +7,19 @@
     <script src="test_wrapper.js"></script>
 </head>
 <body>
+    <div id="game" class="game">
+        <div id="titlebox">
+            <h1 id="gamename"></h1>
+            <p id="gamedescription"></p>
+        </div>
+        <div id="locationdescription"></div>
+        <div id="gameoutput"></div>
+        <div id="gameinput">
+            >> <input type="text" id="commandline" name="commandline" size="130" placeholder="Enter command: verb noun" tabindex="0">
+        </div>
+    </div>
+    <select id="gamefilepicker" ></select>
+    <button type="button" onclick="load_game()">Start</button>
+    <script type="text/javascript">populate_game_picker();</script>
 </body>
 </html>
