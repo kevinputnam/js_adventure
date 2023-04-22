@@ -175,7 +175,7 @@ class Game {
       return "I'd rather not.";
     }
 
-    if (i.interacted){
+    if (i.interacted && i.interactOnce){
       return "Not again ...";
     } else {
       if (i.requires){

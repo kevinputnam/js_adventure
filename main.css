@@ -69,6 +69,10 @@ html {
     scrollbar-width: none; /*hides scroll bars for firefox*/
 }
 
+#locationdescription::-webkit-scrollbar {
+    display: none; /*hides scroll bars for webkit browsers*/
+}
+
 #gameinput {
     position: absolute;
     left: 10px;

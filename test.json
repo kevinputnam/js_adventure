@@ -1,5 +1,5 @@
 { "name":"Everett Street Apartments",
-  "description":"Welcome to Everett Street Apartments. You'll be living here this summer with your Uncle Franklin. Get to know your neighbors, learn a thing or two, and maybe solve a mystery.",
+  "description":"Welcome to Everett Street Apartments. You'll be living here this summer with your Uncle Henry. Get to know your neighbors, learn a thing or two, and maybe solve a mystery.",
   "start":[0,0],
   "things":
   {"0":{
@@ -18,7 +18,7 @@
       "move" : { "interacted" : false,
                "action" : "You move the plant.",
                "requires" : null,
-               "effects" : [["set",[1,"hidden",false]]],
+               "effects" : [["set",[1,"hidden",false]],["set",[0,"description","It might be a coffee plant. Definitely needs water."]]],
                "description" : "The pot scrapes against the floor as you slide it, revealing a key."}
     }
   },
@@ -45,7 +45,7 @@
   "8":{"name": "couch",
      "description": "It smells funny, and beware of sinking fully into it.",
      "interactions": {
-        "move": {"interacted": false,
+        "search": {"interacted": false,
                  "action": "You rummage around in the cushions.",
                  "requires": null,
                  "effects": [["set",[12,"hidden",false]]],
@@ -151,13 +151,13 @@
   },
   "21":{
     "name":"sign",
-    "description":"It says something in a strange language.",
+    "description":"It says something in a strange language. If only you could read it.",
     "interactions":{
-      "translate": {
-        "action":"You decipher the elven script.",
+      "read": {
+        "interactOnce":false,
+        "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
         "requires":["skill","elven",2],
-        "requiresFail":"You can't read it, but it might be in elven (2).",
-        "effects":[["set",[21,"description","'It says, \"the grumpy horseman likes to talk.\""]]]
+        "requiresFail":"You can't read it, but it might be in elven (2)."
       }
     }
   }
@@ -175,11 +175,11 @@
         "description":"The TV is here. It is therefore the most interesting room in the apartment.",
         "things":[6,7,8,9,10,11,12,13,21]
       },
-      "2":{"name":"kitchen",
+      "2":{"name":"the kitchen",
            "description": "This is where the magic happens.",
            "things": [14,15,16]
          },
-      "3":{"name":"cellar",
+      "3":{"name":"the cellar",
            "description": "It smells of earth and ancient vegetables.",
            "things": [17,18]
          }

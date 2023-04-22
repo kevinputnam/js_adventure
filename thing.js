@@ -74,6 +74,7 @@ class Thing {
 
 class Interaction {
   constructor(){
+    this.interactOnce = true;
     this.interacted = false;
     this.action = "";
     this.requires = null;
