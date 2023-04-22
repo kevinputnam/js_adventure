@@ -111,6 +111,21 @@ html {
     display:none; /*hides scroll bars for webkit browsers*/
 }
 
+#locationdescription table {
+    color: #03fc3d;
+    font: 12px/14px monospace;
+    width: 60%;
+    text-align: left;
+}
+
+#locationdescription th {
+    width: 50%;
+}
+
+#locationdescription td {
+    vertical-align: top;
+}
+
 img {
 
     vertical-align: middle;

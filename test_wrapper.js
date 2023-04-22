@@ -134,11 +134,16 @@ function start_game(text){
 function update_location(){
   var output = document.getElementById('locationdescription');
   var loc_desc = ""
-  loc_desc += game.location_description()
-  loc_desc += "<br>You see:<br><br>"
+  loc_desc += game.location_description() + "<br><br>";
+  loc_desc += "<table id=\"loc-desc\"><tr><th>You see:</th><th>" + game.things[game.playerid].name + "'s stuff:</th></tr>"
+  loc_desc += "<tr><td>"
   for(const[key,value] of Object.entries(game.location_things())){
     loc_desc += "- " + value + "<br>";
   }
-  loc_desc += "<br>"
+  loc_desc += "</td><td>"
+  for(const[key,value] of Object.entries(game.player_inventory())){
+    loc_desc += "- " + value + "<br>"
+  }
+  loc_desc += "</td></tr></table>"
   output.innerHTML = loc_desc;
 }
