@@ -30,33 +30,39 @@ class Game {
     }
   }
 
+  /*return string description of location*/
   location_description(){
     var description = 'You are in ' + this.currentLocation.name + ". ";
     description += this.currentLocation.description + "\n";
-    description += '\nYou see: \n\n'
+    return description + "\n";
+  }
+
+  /*return dictionary of things in location*/
+  location_things(){
+    var loc_things = {};
     for(const thingid of this.currentLocation.things){
       var thing = this.things[thingid];
       if (! thing.hidden){
-        description += "- (" + thingid + ") " + thing.name;
-        var interactions = thing.get_interactions;
-        for(const interaction of thing.get_interactions()){
-          description += " [" + interaction + "] ";
-        }
-        description += "\n";
+        loc_things[thingid] = thing.name;
       }
     }
     for(const charid of this.npcs){
       var character = this.things[charid];
       if (character.location[0] == this.currentCoords[0] && character.location[1] == this.currentCoords[1]){
-        description += "- (" + charid + ") " + character.name;
-        for(const interaction of character.get_interactions()){
-          description += " [" + interaction + "] ";
-
-        }
-        description += "\n";
+        loc_things[charid] = character.name;
       }
     }
-    return description + "\n";
+
+    return loc_things;
+  }
+
+  /*return dictionary of things in player inventory*/
+  player_inventory(){
+    var inv_things = {};
+    for(const thingid of this.things[this.playerid].things){
+      inv_things[thingid] = this.things[thingid].name
+    }
+    return inv_things
   }
 
   go(thingid){

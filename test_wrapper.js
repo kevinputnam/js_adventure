@@ -55,7 +55,11 @@ function process_command(command){
                 update_location();
                 break;
               case 'look':
-                update_command_output(thing.look() + "<br><br>");
+                var out_str = thing.look() + " ";
+                for(const inter_str of thing.get_interactions()){
+                  out_str += "[" + inter_str + "] "
+                }
+                update_command_output(out_str + "<br><br>");
                 break;
               case 'take':
                 update_command_output(game.take(game.playerid,thingid,game.currentCoords) + "<br><br>");
@@ -81,8 +85,8 @@ function process_command(command){
   }
   if (verb == 'inventory'){
     var invout = game.things[game.playerid].name + "'s inventory:<br>";
-    for(const thingid of game.things[game.playerid].things){
-        invout += "- " + game.things[thingid].name + "<br>";
+    for(const[key,value] of Object.entries(game.player_inventory())){
+      invout += "- " + value + "<br>";
     }
     update_command_output(invout + "<br>");
   }
@@ -129,5 +133,12 @@ function start_game(text){
 
 function update_location(){
   var output = document.getElementById('locationdescription');
-  output.innerHTML = game.location_description().replaceAll('\n','<br>');
+  var loc_desc = ""
+  loc_desc += game.location_description()
+  loc_desc += "<br>You see:<br><br>"
+  for(const[key,value] of Object.entries(game.location_things())){
+    loc_desc += "- " + value + "<br>";
+  }
+  loc_desc += "<br>"
+  output.innerHTML = loc_desc;
 }
