@@ -54,8 +54,7 @@ html {
     display: none; /*hides scroll bars for webkit browsers*/
 }
 
-#locationdescription {
-    overflow:  scroll;
+#desccontainer {
     position: absolute;
     left: 10px;
     top:  140px;
@@ -69,8 +68,35 @@ html {
     scrollbar-width: none; /*hides scroll bars for firefox*/
 }
 
-#locationdescription::-webkit-scrollbar {
+#desccontainer::-webkit-scrollbar {
     display: none; /*hides scroll bars for webkit browsers*/
+}
+
+#locationdescription {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    width: 980px;
+    height: 30px;
+    padding: 10px;
+}
+
+#locationthings {
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 280px;
+    height: 210px;
+    padding: 10px;
+}
+
+#playerstuff {
+    position: absolute;
+    left: 310px;
+    top: 40px;
+    width: 380px;
+    height: 210px;
+    padding: 10px;
 }
 
 #gameinput {
@@ -109,21 +135,6 @@ html {
 
 #image::-webkit-scrollbar {
     display:none; /*hides scroll bars for webkit browsers*/
-}
-
-#locationdescription table {
-    color: #03fc3d;
-    font: 12px/14px monospace;
-    width: 60%;
-    text-align: left;
-}
-
-#locationdescription th {
-    width: 50%;
-}
-
-#locationdescription td {
-    vertical-align: top;
 }
 
 img {

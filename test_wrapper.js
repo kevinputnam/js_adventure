@@ -2,7 +2,7 @@ var game;
 
 var gamefiles = ['test.json'];
 
-document.onkeypress = function (e) {
+document.onkeypress = function (e) { //basically the game loop
     if (e.keyCode == 0x0D){ //return key
       var proginput = document.getElementById('commandline');
       switch(game.mode){
@@ -16,11 +16,13 @@ document.onkeypress = function (e) {
           process_command(proginput.value);
       }
       proginput.value = '';
+      update_ui();
     }
 };
 
 function process_convo_command(command){
   var selection = parseInt(command);
+  update_command_output(">> " + command + "<br>");
   if(selection == game.conversationPrompts.length){
     game.mode = "";
     update_command_output("OK.<br><br>");
@@ -28,8 +30,6 @@ function process_convo_command(command){
   }else{
     update_command_output(game.interact(game.playerid,game.receiverID,game.conversationPrompts[selection - 1]).replaceAll('\n','<br>')+"<br><br>");
   }
-  update_location();
-  update_command_output(">> " + command + "<br>");
   update_command_output(game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>')
 }
 
@@ -41,6 +41,7 @@ function process_command(command){
   var words = command.split(" ");
   var nounWords = command.replace(words[0]+" ","");
   var verb = words[0];
+  update_command_output(">> " + command + "<br>");
   if (words.length >= 2){
     // is the noun here?
     var localthings = game.currentLocation.things.concat(get_local_npcs());
@@ -52,7 +53,6 @@ function process_command(command){
             switch(verb){
               case 'go':
                 game.go(thingid);
-                update_location();
                 break;
               case 'look':
                 var out_str = thing.look() + " ";
@@ -63,11 +63,9 @@ function process_command(command){
                 break;
               case 'take':
                 update_command_output(game.take(game.playerid,thingid,game.currentCoords) + "<br><br>");
-                update_location();
                 break;
               default:
                 update_command_output(game.interact(game.playerid,thingid,verb).replaceAll('\n','<br>')+"<br><br>");
-                update_location();
             }
           }
         }
@@ -78,7 +76,6 @@ function process_command(command){
         var thing = game.things[thingid];
         if (nounWords == thing.name){
           update_command_output(game.put(game.playerid,thingid,game.currentCoords) + "<br><br>");
-          update_location();
         }
       }
     }
@@ -90,7 +87,6 @@ function process_command(command){
     }
     update_command_output(invout + "<br>");
   }
-  update_command_output(">> " + command + "<br>");
 }
 
 function get_local_npcs(){
@@ -105,7 +101,8 @@ function get_local_npcs(){
 
 function update_command_output(cmdout){
   var output = document.getElementById('gameoutput');
-  output.innerHTML = cmdout + output.innerHTML;
+  output.innerHTML = output.innerHTML + cmdout;
+  output.scrollTop = output.scrollHeight
 }
 
 function populate_game_picker(){
@@ -128,22 +125,43 @@ function start_game(text){
   game = new Game(jstuff);
   document.getElementById('gamename').innerHTML = game.name;
   document.getElementById('gamedescription').innerHTML = game.description;
+  update_ui();
+}
+
+function update_ui(){
   update_location();
+  update_command_prompt();
+}
+
+function update_command_prompt(){
+  var proginput = document.getElementById('commandline');
+  switch(game.mode){
+    case 'talk':
+    case 'fight':
+      proginput.placeholder="Enter command: [integer selection]";
+      break;
+    default:
+      proginput.placeholder="Enter command: [verb] [noun]";
+  }
 }
 
 function update_location(){
   var output = document.getElementById('locationdescription');
   var loc_desc = ""
-  loc_desc += game.location_description() + "<br><br>";
-  loc_desc += "<table id=\"loc-desc\"><tr><th>You see:</th><th>" + game.things[game.playerid].name + "'s stuff:</th></tr>"
-  loc_desc += "<tr><td>"
-  for(const[key,value] of Object.entries(game.location_things())){
-    loc_desc += "- " + value + "<br>";
-  }
-  loc_desc += "</td><td>"
-  for(const[key,value] of Object.entries(game.player_inventory())){
-    loc_desc += "- " + value + "<br>"
-  }
-  loc_desc += "</td></tr></table>"
+  loc_desc += game.location_description()
   output.innerHTML = loc_desc;
+  var thingDiv = document.getElementById('locationthings');
+  console.log(thingDiv);
+  var playerDiv = document.getElementById('playerstuff');
+  console.log(playerDiv)
+  var loc_things = "You see:<br><br>";
+  for(const[key,value] of Object.entries(game.location_things())){
+    loc_things += "- " + value + "<br>";
+  }
+  thingDiv.innerHTML = loc_things;
+  var player_stuff = game.things[game.playerid].name + "'s stuff:<br><br>"
+  for(const[key,value] of Object.entries(game.player_inventory())){
+    player_stuff += "- " + value + "<br>"
+  }
+  playerDiv.innerHTML = player_stuff;
 }

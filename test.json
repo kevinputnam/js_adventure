@@ -117,7 +117,7 @@
                "canTake": true
             },
   "18":{
-               "name": "kitchen",
+               "name": "tunnel",
                "description": "It's a steep climb, but you can probably make it.",
                "goesTo": [0,2]
             },
