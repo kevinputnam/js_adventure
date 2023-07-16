@@ -1,28 +1,58 @@
 var game;
-
 var gamefiles = ['test.json'];
+
+help_output = `You can enter "help" at any time to see this message.<br>
+<br>
+Most of the time you can interact with the game world by using a simple [noun] [verb] construction. If you "look" at something, the output will include the list of verbs that can be used with it. For example:<br>
+<br>
+<blockquote>
+\>\> look sign<br>
+It says something in a strange language. If only you could read it. [look] [read]</blockquote>
+Some verbs will work almost all the time, like "look". Others are associated with the object. "read" in this case.<br>
+<br>
+When you're in a conversation, the game expects you to enter the index of the item in the menu you'd like to choose:<br>
+
+<blockquote>
+\>\> talk Uncle<br>
+What do you want to say?<br>
+1. say, "How are you?"<br>
+2. say, "Can I go to the cellar?"<br>
+3. Quit conversation.<br>
+<br>
+\>\> 1<br>
+You say, "How are you?"<br>
+He says, "Well, I'd be better if you made dinner."</blockquote>
+The "help" command should work all the time (even in conversation mode).`
 
 document.onkeypress = function (e) { //basically the game loop
     if (e.keyCode == 0x0D){ //return key
       var proginput = document.getElementById('commandline');
-      switch(game.mode){
-        case 'talk':
-          process_convo_command(proginput.value);
-          break;
-        case 'fight':
-          process_fight_command(proginput.value);
-          break;
-        default:
-          process_command(proginput.value);
+      update_command_output(">> " + proginput.value + "<br>");
+      if (proginput.value.startsWith('help')){
+        print_game_help(proginput.value);
+      } else {
+        switch(game.mode){
+          case 'talk':
+            process_convo_command(proginput.value);
+            break;
+          case 'fight':
+            process_fight_command(proginput.value);
+            break;
+          default:
+            process_command(proginput.value);
+        }
       }
       proginput.value = '';
       update_ui();
     }
 };
 
+function print_game_help(command){
+  update_command_output(help_output + "<br><br>");
+}
+
 function process_convo_command(command){
   var selection = parseInt(command);
-  update_command_output(">> " + command + "<br>");
   if(selection == game.conversationPrompts.length){
     game.mode = "";
     update_command_output("OK.<br><br>");
@@ -41,7 +71,6 @@ function process_command(command){
   var words = command.split(" ");
   var nounWords = command.replace(words[0]+" ","");
   var verb = words[0];
-  update_command_output(">> " + command + "<br>");
   if (words.length >= 2){
     // is the noun here?
     var localthings = game.currentLocation.things.concat(get_local_npcs());
@@ -131,6 +160,15 @@ function start_game(text){
 function update_ui(){
   update_location();
   update_command_prompt();
+}
+
+function update_graphics_display(image_path){
+  var graphics_div = document.getElementById('graphicsdisplay');
+  if (image_path) {
+    graphics_div.innerHTML = '<img style="height: 100%;width: 100%;object-fit:contain;" src="' + image_path + '"/>';
+  }else {
+    graphics_div.innerHTML = ''
+  }
 }
 
 function update_command_prompt(){

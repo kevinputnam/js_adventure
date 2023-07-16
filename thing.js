@@ -14,6 +14,7 @@ class Thing {
     this.takeInteraction = null;
     this.goInteraction = null;
     this.location=[];
+    this.image= null;
   }
 
   load(properties){
