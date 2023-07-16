@@ -78,7 +78,7 @@ function process_command(command){
       var thing = game.things[thingid];
       if (! thing.hidden){
         if(nounWords == thing.name){
-          if (thing.get_interactions().includes(verb)){
+          if (game.get_interactions(thingid).includes(verb)){
             switch(verb){
               case 'go':
                 game.go(thingid);
@@ -88,7 +88,7 @@ function process_command(command){
                 break
               case 'look':
                 var out_str = thing.look() + " ";
-                for(const inter_str of thing.get_interactions()){
+                for(const inter_str of game.get_interactions(thingid)){
                   out_str += "[" + inter_str + "] "
                 }
                 update_command_output(out_str + "<br><br>");

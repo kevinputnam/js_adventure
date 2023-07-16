@@ -12,6 +12,7 @@ class Game {
     this.mode = "";
     this.conversationPrompts = [];
     this.receiverID = null;
+    this.interactions = [];
     for (const [key,value] of Object.entries(gameData.things)){
       if ('isCharacter' in value){
         var character = new Character;
@@ -28,6 +29,12 @@ class Game {
         this.things[key] = thing;
       }
     }
+    for (const [key,value] of Object.entries(gameData.interactions)){
+      var interaction = new Interaction;
+      interaction.load(value);
+      this.interactions[key] = interaction
+    }
+    console.log(this.interactions);
   }
 
   /*return string description of location*/
@@ -86,6 +93,23 @@ class Game {
   //set value of key object in receiving thing
   set(receiverid,key,value){
     this.things[receiverid].set(key,value);
+  }
+
+  add_interactions(receiverid,ints){
+    var receiver = this.things[receiverid];
+    for (var i of ints){
+      receiver.interactions.push(i);
+    }
+    console.log(receiver.interactions);
+  }
+
+  remove_interactions(receiverid,ints){
+    var receiver = this.things[receiverid];
+    for (var i of ints){
+      var index = receiver.interactions.indexOf(i);
+      receiver.interactions.splice(index, 1);
+    }
+    console.log(receiver.interactions);
   }
 
   add_interaction(receiverid,name,attrs){
@@ -152,11 +176,15 @@ class Game {
     var receiver = this.things[receiverid];
     var initiator = this.things[initiatorid];
     var promptCount = 0;
-    for (const [key,value] of Object.entries(receiver.interactions)){
-      if (value.type == "talk"){
-        promptCount ++;
-        this.conversationPrompts.push(key);
-        output += promptCount + ". " + key + "\n";
+    for (var int_id of receiver.interactions){
+      var value = this.interactions[int_id];
+      var key = value.name;
+      if (!value.hidden){
+        if (value.type == "talk"){
+          promptCount ++;
+          this.conversationPrompts.push(key);
+          output += promptCount + ". " + key + "\n";
+        }
       }
     }
     if (output != ""){
@@ -179,9 +207,14 @@ class Game {
     }
     var initiator = this.things[initiatorid];
     var receiver = this.things[receiverid];
-    if (interaction in receiver.interactions){
-      var i = receiver.interactions[interaction];
-    }else{
+    var i = null;
+    for (var int_id of receiver.interactions){
+      var temp_i = this.interactions[int_id];
+      if (interaction == temp_i.name){
+        i = temp_i;
+      }
+    }
+    if (i == null){
       return "I'd rather not.";
     }
 
@@ -213,5 +246,31 @@ class Game {
         return i.action + " " + i.description;
       }
     }
+  }
+
+  get_interactions(thingid){
+    var interactions = ['look'];
+    if (this.things[thingid].canTake){
+      interactions.push('take');
+    }
+    if (this.things[thingid].goesTo){
+      interactions.push('go');
+    }
+    var talk = false;
+    for (var id of this.things[thingid].interactions){
+      var value = this.interactions[id];
+      if(!value.hidden){
+        if(value.type == "talk"){
+          talk = true;
+        }else{
+          interactions.push(value.name);
+        }
+      }
+    }
+    if(talk){
+      interactions.push('talk');
+    }
+    console.log(interactions);
+    return interactions;
   }
 }

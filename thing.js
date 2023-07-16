@@ -10,7 +10,7 @@ class Thing {
     this.isAttack = false;
     this.fight = false;
     this.things = [];
-    this.interactions = {};
+    this.interactions = [];
     this.takeInteraction = null;
     this.goInteraction = null;
     this.location=[];
@@ -19,11 +19,7 @@ class Thing {
 
   load(properties){
     for (const [key,value] of Object.entries(properties)){
-      if(key == "interactions"){
-        this.load_interactions(value);
-      }else{
-        this[key] = value;
-      }
+      this[key] = value;
     }
     if (! this.name || ! this.description) {
       return false;
@@ -58,10 +54,12 @@ class Thing {
     }
     var talk = false;
     for (const [key,value] of Object.entries(this.interactions)){
-      if(value.type == "talk"){
-        talk = true;
-      }else{
-        interactions.push(key);
+      if(!value.hidden){
+        if(value.type == "talk"){
+          talk = true;
+        }else{
+          interactions.push(key);
+        }
       }
     }
     if(talk){
@@ -81,6 +79,7 @@ class Thing {
 
 class Interaction {
   constructor(){
+    this.id =null;
     this.interactOnce = true;
     this.interacted = false;
     this.action = "";
@@ -89,11 +88,16 @@ class Interaction {
     this.effects = [];
     this.description = "";
     this.type = "";
+    this.hidden = false;
   }
 
   load(properties){
     for (const[key,value] of Object.entries(properties)){
       this[key] = value;
+    }
+    if (this.id == null){
+      console.log("Interaction must have id.");
+      console.log(this);
     }
   }
 }

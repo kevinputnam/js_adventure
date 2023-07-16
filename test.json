@@ -1,6 +1,64 @@
 { "name":"Everett Street Apartments",
   "description":"Welcome to Everett Street Apartments. You'll be living here this summer with your Uncle Henry. Get to know your neighbors, learn a thing or two, and maybe solve a mystery.",
   "start":[0,0],
+  "interactions":{
+   "0": {
+        "name":"read",
+        "interactOnce":false,
+        "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
+        "requires":["skill","elven",2],
+        "requiresFail":"You can't read it, but it might be in elven (2)."
+        },
+  "1" : {
+           "name":"move",
+           "interacted" : false,
+           "action" : "You move the plant.",
+           "requires" : null,
+           "effects" : [["set",[1,"hidden",false]],["set",[0,"description","It might be a coffee plant. Definitely needs water."]]],
+           "description" : "The pot scrapes against the floor as you slide it, revealing a key."
+         },
+    "2": {
+           "name":"search",
+           "interacted": false,
+           "action": "You rummage around in the cushions.",
+           "requires": null,
+           "effects": [["set",[12,"hidden",false]]],
+           "description": "You uncover some coins."
+           },
+    "3": {
+           "name":"open",
+           "interacted": false,
+           "action": "You unlock and open the cabinet.",
+           "requires": ["things",1],
+           "requiresFail": "Looks like you need a key to open it.",
+           "effects": [["set",[11,"hidden",false]]],
+           "description": "The key turns in the lock allowing you to open the cabinet. There's a bunch of puzzles inside."
+          },
+    "4": {
+           "name":"open",
+           "interacted": false,
+           "action": "You open the cabinet.",
+           "requires": null,
+           "effects": [["set",[16,"hidden",false]]],
+           "description": "And discover a secret passage. Wonder where it goes."
+          },
+    "5":  {
+           "name":"say, \"How are you?\"",
+           "type": "talk",
+           "description": "He says, \"Well, I'd be better if you made dinner.\"",
+           "effects":[["add_interactions",[19,[7]]],["remove_interactions",[19,[5]]]]
+          },
+    "6":  {
+          "name":"say, \"Can I go to the cellar?\"",
+          "type": "talk",
+          "description":"He says, \"Sure. If you can find it.\""
+          },
+    "7":  {
+          "name":"say, \"Then what do you want?\"",
+          "type":"talk",
+          "description":"Gravy, of course."
+          }
+  },
   "things":
   {"0":{
     "name": "plant",
@@ -15,13 +73,7 @@
     "prompts": [],
     "responses": [],
     "image":"images/coffee_plant.jpg",
-    "interactions": {
-      "move" : { "interacted" : false,
-               "action" : "You move the plant.",
-               "requires" : null,
-               "effects" : [["set",[1,"hidden",false]],["set",[0,"description","It might be a coffee plant. Definitely needs water."]]],
-               "description" : "The pot scrapes against the floor as you slide it, revealing a key."}
-    }
+    "interactions": [1]
   },
   "1": {
     "name":"key",
@@ -45,32 +97,15 @@
      "goesTo": [0,0]},
   "8":{"name": "couch",
      "description": "It smells funny, and beware of sinking fully into it.",
-     "interactions": {
-        "search": {"interacted": false,
-                 "action": "You rummage around in the cushions.",
-                 "requires": null,
-                 "effects": [["set",[12,"hidden",false]]],
-                 "description": "You uncover some coins."}
-               }
-            },
-  "9":{
-               "name": "remote",
-               "description": "Lots of buttons. Possession of the remote is a power move unlike any other."
-            },
-  "10":{
-               "name": "cabinet",
-               "description": "I wonder what is in there.",
-               "interactions": {
-                  "open": {
-                     "interacted": false,
-                     "action": "You unlock and open the cabinet.",
-                     "requires": ["things",1],
-                     "requiresFail": "Looks like you need a key to open it.",
-                     "effects": [["set",[11,"hidden",false]]],
-                     "description": "The key turns in the lock allowing you to open the cabinet. There's a bunch of puzzles inside."
-                  }
-               }
-            },
+     "interactions": [2]
+      },
+  "9":{"name": "remote",
+       "description": "Lots of buttons. Possession of the remote is a power move unlike any other."
+      },
+  "10":{"name": "cabinet",
+        "description": "I wonder what is in there.",
+        "interactions": [3]
+       },
   "11":{
                "name": "puzzles",
                "description": "They're old and dusty, but someone would probably enjoy them.",
@@ -96,15 +131,7 @@
   "15":{
                "name": "cabinet",
                "description": "Under the sink. There's probably a garbage can in there.",
-               "interactions": {
-                  "open": {
-                     "interacted": false,
-                     "action": "You open the cabinet.",
-                     "requires": null,
-                     "effects": [["set",[16,"hidden",false]]],
-                     "description": "And discover a secret passage. Wonder where it goes."
-                  }
-               }
+               "interactions": [4]
             },
   "16":{
                "name": "passage",
@@ -127,18 +154,7 @@
       "isCharacter":true,
       "description":"He's got a well used look. Kind eyes. Smells like coffee and a hint of sweet tobacco.",
       "location":[0,2],
-      "interactions": {
-        "say, \"How are you?\"": {
-          "type": "talk",
-          "description": "He says, \"Well, I'd be better if you made dinner.\"",
-          "effects":[["add_interaction",[19,"say, \"What do you want?\"",{"type":"talk","description":"Gravy, what else?"}]]]
-        },
-        "say, \"Can I go to the cellar?\"": {
-          "type": "talk",
-          "description":"He says, \"Sure. If you can find it.\""
-        }
-
-      }
+      "interactions": [5,6]
     },
   "20":{
     "name":"Willow",
@@ -154,15 +170,8 @@
   "21":{
     "name":"sign",
     "description":"It says something in a strange language. If only you could read it.",
-    "interactions":{
-      "read": {
-        "interactOnce":false,
-        "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
-        "requires":["skill","elven",2],
-        "requiresFail":"You can't read it, but it might be in elven (2)."
-      }
+    "interactions":[0]
     }
-  }
   },
   "sections":{
     "0":{
