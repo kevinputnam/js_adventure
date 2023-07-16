@@ -30,6 +30,12 @@ class Thing {
     }
   }
 
+  add_interaction(name,attrs){
+    var i = new Interaction;
+    i.load(attrs);
+    this.interactions[name] = i;
+  }
+
   set(key,value){
     this[key] = value;
   }

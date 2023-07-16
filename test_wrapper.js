@@ -55,12 +55,12 @@ function process_convo_command(command){
   var selection = parseInt(command);
   if(selection == game.conversationPrompts.length){
     game.mode = "";
-    update_command_output("OK.<br><br>");
+    update_command_output('You leave the converstaion.<br><br>');
     return;
   }else{
+    update_command_output('You ' + game.conversationPrompts[selection -1] + '<br>');
     update_command_output(game.interact(game.playerid,game.receiverID,game.conversationPrompts[selection - 1]).replaceAll('\n','<br>')+"<br><br>");
   }
-  update_command_output(game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>')
 }
 
 function process_fight_command(command){
@@ -83,6 +83,9 @@ function process_command(command){
               case 'go':
                 game.go(thingid);
                 break;
+              case 'talk':
+                game.interact(game.playerid,thingid,verb);
+                break
               case 'look':
                 var out_str = thing.look() + " ";
                 for(const inter_str of thing.get_interactions()){
@@ -184,19 +187,26 @@ function update_command_prompt(){
 }
 
 function update_location(){
-  var output = document.getElementById('locationdescription');
-  var loc_desc = ""
-  loc_desc += game.location_description()
-  output.innerHTML = loc_desc;
-  var thingDiv = document.getElementById('locationthings');
-  console.log(thingDiv);
+  var descDiv = document.getElementById('currentdescription');
+  var choiceDiv = document.getElementById('currentchoices');
   var playerDiv = document.getElementById('playerstuff');
-  console.log(playerDiv)
-  var loc_things = "You see:<br><br>";
-  for(const[key,value] of Object.entries(game.location_things())){
-    loc_things += "- " + value + "<br>";
+
+  switch(game.mode){
+  case 'talk':
+    descDiv.innerHTML = "You are talking to " + game.things[game.receiverID].name;
+    choiceDiv.innerHTML = game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>';
+    break
+  case 'fight':
+    console.log("Not Implemented.")
+    break
+  default:
+    descDiv.innerHTML = game.location_description();
+    var loc_things = "You see:<br><br>";
+    for(const[key,value] of Object.entries(game.location_things())){
+      loc_things += "- " + value + "<br>";
+    }
+    choiceDiv.innerHTML = loc_things;
   }
-  thingDiv.innerHTML = loc_things;
   var player_stuff = game.things[game.playerid].name + "'s stuff:<br><br>"
   for(const[key,value] of Object.entries(game.player_inventory())){
     player_stuff += "- " + value + "<br>"

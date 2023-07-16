@@ -82,7 +82,7 @@ html {
     border:  1px solid #03fc3d;
 }
 
-#locationdescription {
+#currentdescription {
     position: absolute;
     left: 10px;
     top: 0px;
@@ -91,7 +91,7 @@ html {
     padding: 10px;
 }
 
-#locationthings {
+#currentchoices {
     position: absolute;
     left: 10px;
     top: 40px;

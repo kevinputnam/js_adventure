@@ -88,6 +88,10 @@ class Game {
     this.things[receiverid].set(key,value);
   }
 
+  add_interaction(receiverid,name,attrs){
+    this.things[receiverid].add_interaction(name,attrs);
+  }
+
   //remove from one inventory and put in the other
   exchange(initiatorid, receiverid, thingid){
     var initiator = this.things[initiatorid];
@@ -158,7 +162,7 @@ class Game {
     if (output != ""){
       promptCount ++;
       this.conversationPrompts.push('Quit conversation.');
-      output = "What do you want to say?\n" + output + promptCount + ". Quit conversation.";
+      output = "What do you want to do?\n" + output + promptCount + ". Quit conversation.";
     }
     return output;
   }

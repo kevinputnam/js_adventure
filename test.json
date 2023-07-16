@@ -128,9 +128,10 @@
       "description":"He's got a well used look. Kind eyes. Smells like coffee and a hint of sweet tobacco.",
       "location":[0,2],
       "interactions": {
-        "say,\"How are you?\"": {
+        "say, \"How are you?\"": {
           "type": "talk",
-          "description": "He says, \"Well, I'd be better if you made dinner.\""
+          "description": "He says, \"Well, I'd be better if you made dinner.\"",
+          "effects":[["add_interaction",[19,"say, \"What do you want?\"",{"type":"talk","description":"Gravy, what else?"}]]]
         },
         "say, \"Can I go to the cellar?\"": {
           "type": "talk",
