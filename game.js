@@ -34,7 +34,6 @@ class Game {
       interaction.load(value);
       this.interactions[key] = interaction
     }
-    console.log(this.interactions);
   }
 
   /*return string description of location*/
@@ -75,7 +74,6 @@ class Game {
   go(thingid){
     if(this.things[thingid].go()){
       var locationCoords = this.things[thingid].go();
-      console.log(locationCoords);
       var secid = locationCoords[0];
       var locid = locationCoords[1];
       if (secid in game.sections){
@@ -100,7 +98,6 @@ class Game {
     for (var i of ints){
       receiver.interactions.push(i);
     }
-    console.log(receiver.interactions);
   }
 
   remove_interactions(receiverid,ints){
@@ -109,7 +106,6 @@ class Game {
       var index = receiver.interactions.indexOf(i);
       receiver.interactions.splice(index, 1);
     }
-    console.log(receiver.interactions);
   }
 
   add_interaction(receiverid,name,attrs){
@@ -154,7 +150,6 @@ class Game {
     var location;
     var initiator = this.things[initiatorid];
     if (initiator.things.includes(thingid)){
-      console.log(thingid);
       if (locationCoords == null){
         location = this.currentLocation;
       } else{
@@ -178,9 +173,9 @@ class Game {
     var promptCount = 0;
     for (var int_id of receiver.interactions){
       var value = this.interactions[int_id];
-      var key = value.name;
+      var key = value.action;
       if (!value.hidden){
-        if (value.type == "talk"){
+        if (value.name == "talk"){
           promptCount ++;
           this.conversationPrompts.push(key);
           output += promptCount + ". " + key + "\n";
@@ -205,47 +200,65 @@ class Game {
       case 'talk':
         return this.talk(initiatorid,receiverid);
     }
+    var action_out = "";
+    var result_out = "";
     var initiator = this.things[initiatorid];
     var receiver = this.things[receiverid];
     var i = null;
     for (var int_id of receiver.interactions){
       var temp_i = this.interactions[int_id];
-      if (interaction == temp_i.name){
-        i = temp_i;
+      if (temp_i.name == "talk"){
+        if (temp_i.action == interaction){
+          i = temp_i;
+          action_out = 'You say, "' + i.action + '"';
+          result_out = receiver.name + ' says, "' + i.description + '"';
+        }
+      }else{
+        if (interaction == temp_i.name){
+          i = temp_i;
+          action_out = i.action;
+          result_out = i.description;
+        }
       }
     }
+    var success = true;
     if (i == null){
-      return "I'd rather not.";
-    }
+      result_out =  "I'd rather not.";
+    }else{
+      if (i.interacted && i.interactOnce){
+        result_out =  "Not again ...";
+      } else {
+        if (i.requires){
+          var req = i.requires;
+          if ((req[0] == "things")){
+            if (! initiator.things.includes(req[1])){
+              result_out = i.requiresFail;
+              success = false;
+            }
+          }else if (req[0] == "skill"){
+            if(! req[1] in initiator.skills || initiator.skills[req[1]] < req[2]){
+              result_out = i.requiresFail;
+              success = false;
+            }
+          }else if (req[0] == "attribute"){
+            result_out = "Not yet implemented";
+          }
+        }
+        if (success){
+          if (i.effects){
+            for (const e of i.effects){
+              var emethod = e[0];
+              var eargs = e[1];
+                //call method with args on target thing
+              this[emethod](...eargs);
+            }
+            i.interacted = true;
+          }
+        }
 
-    if (i.interacted && i.interactOnce){
-      return "Not again ...";
-    } else {
-      if (i.requires){
-        var req = i.requires;
-        if ((req[0] == "things")){
-          if (! initiator.things.includes(req[1])){
-            return i.requiresFail;
-          }
-        }else if (req[0] == "skill"){
-          if(! req[1] in initiator.skills || initiator.skills[req[1]] < req[2]){
-            return i.requiresFail;
-          }
-        }else if (req[0] == "attribute"){
-          return "Not yet implemented";
-        }
-      }
-      if (i.effects){
-        for (const e of i.effects){
-          var emethod = e[0];
-          var eargs = e[1];
-            //call method with args on target thing
-          this[emethod](...eargs);
-        }
-        i.interacted = true;
-        return i.action + " " + i.description;
       }
     }
+    return action_out + "<br>" + result_out;
   }
 
   get_interactions(thingid){
@@ -260,7 +273,7 @@ class Game {
     for (var id of this.things[thingid].interactions){
       var value = this.interactions[id];
       if(!value.hidden){
-        if(value.type == "talk"){
+        if(value.name == "talk"){
           talk = true;
         }else{
           interactions.push(value.name);
@@ -270,7 +283,6 @@ class Game {
     if(talk){
       interactions.push('talk');
     }
-    console.log(interactions);
     return interactions;
   }
 }

@@ -58,7 +58,6 @@ function process_convo_command(command){
     update_command_output('You leave the converstaion.<br><br>');
     return;
   }else{
-    update_command_output('You ' + game.conversationPrompts[selection -1] + '<br>');
     update_command_output(game.interact(game.playerid,game.receiverID,game.conversationPrompts[selection - 1]).replaceAll('\n','<br>')+"<br><br>");
   }
 }

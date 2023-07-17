@@ -3,11 +3,11 @@
   "start":[0,0],
   "interactions":{
    "0": {
-        "name":"read",
-        "interactOnce":false,
-        "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
-        "requires":["skill","elven",2],
-        "requiresFail":"You can't read it, but it might be in elven (2)."
+          "name":"read",
+          "interactOnce":false,
+          "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
+          "requires":["skill","elven",2],
+          "requiresFail":"You can't read it, but it might be in elven (2)."
         },
   "1" : {
            "name":"move",
@@ -28,7 +28,7 @@
     "3": {
            "name":"open",
            "interacted": false,
-           "action": "You unlock and open the cabinet.",
+           "action": "You try to open the cabinet.",
            "requires": ["things",1],
            "requiresFail": "Looks like you need a key to open it.",
            "effects": [["set",[11,"hidden",false]]],
@@ -43,19 +43,19 @@
            "description": "And discover a secret passage. Wonder where it goes."
           },
     "5":  {
-           "name":"say, \"How are you?\"",
-           "type": "talk",
-           "description": "He says, \"Well, I'd be better if you made dinner.\"",
+           "action":"How are you?",
+           "name": "talk",
+           "description": "Well, I'd be better if you made dinner.",
            "effects":[["add_interactions",[19,[7]]],["remove_interactions",[19,[5]]]]
           },
     "6":  {
-          "name":"say, \"Can I go to the cellar?\"",
-          "type": "talk",
-          "description":"He says, \"Sure. If you can find it.\""
+          "action":"Can I go to the cellar?",
+          "name": "talk",
+          "description":"Sure. If you can find it."
           },
     "7":  {
-          "name":"say, \"Then what do you want?\"",
-          "type":"talk",
+          "action":"Then what do you want?",
+          "name":"talk",
           "description":"Gravy, of course."
           }
   },

@@ -55,7 +55,7 @@ class Thing {
     var talk = false;
     for (const [key,value] of Object.entries(this.interactions)){
       if(!value.hidden){
-        if(value.type == "talk"){
+        if(value.name == "talk"){
           talk = true;
         }else{
           interactions.push(key);
