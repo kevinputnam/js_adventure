@@ -44,30 +44,6 @@ class Thing {
     return this.goesTo;
   }
 
-  get_interactions(){
-    var interactions = ['look'];
-    if (this.canTake){
-      interactions.push('take');
-    }
-    if (this.goesTo){
-      interactions.push('go');
-    }
-    var talk = false;
-    for (const [key,value] of Object.entries(this.interactions)){
-      if(!value.hidden){
-        if(value.name == "talk"){
-          talk = true;
-        }else{
-          interactions.push(key);
-        }
-      }
-    }
-    if(talk){
-      interactions.push('talk');
-    }
-    return interactions;
-  }
-
   load_interactions(ints){
     for (const [key,value] of Object.entries(ints)){
       var i = new Interaction;
