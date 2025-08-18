@@ -5,9 +5,10 @@
    "0": {
           "name":"read",
           "interactOnce":false,
-          "action":"It says, in elven, \"the grumpy horseman likes to talk.\"",
+          "action":"You try to read it.",
           "requires":["skill","elven",2],
-          "requiresFail":"You can't read it, but it might be in elven (2)."
+          "requiresFail":"You can't read it, but it might be in elven (2).",
+          "description":"It says, in elven, \"the grumpy horseman likes to talk.\""
         },
   "1" : {
            "name":"move",

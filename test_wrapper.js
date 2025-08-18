@@ -73,6 +73,7 @@ function process_command(command){
   if (words.length >= 2){
     // is the noun here?
     var localthings = game.currentLocation.things.concat(get_local_npcs());
+    localthings = localthings.concat(game.things[game.playerid].things);
     for (const thingid of localthings){
       var thing = game.things[thingid];
       if (! thing.hidden){
@@ -110,13 +111,21 @@ function process_command(command){
         }
       }
     }
-  }
-  if (verb == 'inventory'){
-    var invout = game.things[game.playerid].name + "'s inventory:<br>";
-    for(const[key,value] of Object.entries(game.player_inventory())){
-      invout += "- " + value + "<br>";
+  } else {
+    if (verb == 'inventory'){
+      var invout = game.things[game.playerid].name + "'s inventory:<br>";
+      for(const[key,value] of Object.entries(game.player_inventory())){
+        invout += "- " + value + "<br>";
+      }
+      update_command_output(invout + "<br>");
+    } else if (verb == 'look'){
+      var lookOut = game.location_description() + "<br>";
+      lookOut += "You see: <br><br>";
+      for(const[key,value] of Object.entries(game.location_things())){
+        lookOut += "- " + value + "<br>";
+      }
+      update_command_output(lookOut + "<br>");
     }
-    update_command_output(invout + "<br>");
   }
 }
 
