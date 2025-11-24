@@ -24,6 +24,8 @@ You say, "How are you?"<br>
 He says, "Well, I'd be better if you made dinner."</blockquote>
 The "help" command should work all the time (even in conversation mode).`
 
+little_help_output = 'Enter "help" at any time for list of commands and play help.'
+
 document.onkeypress = function (e) { //basically the game loop
     if (e.keyCode == 0x0D){ //return key
       var proginput = document.getElementById('commandline');
@@ -48,7 +50,6 @@ document.onkeypress = function (e) { //basically the game loop
         }
       }
       proginput.value = '';
-      //update_ui();
     }
 };
 
@@ -117,6 +118,18 @@ function process_command(command){
           update_command_output(game.put(game.playerid,thingid,game.currentCoords) + "<br><br>");
         }
       }
+    } else if (verb == 'look'){
+      if (nounWords == 'me'){
+        var player = game.things[game.playerid];
+        var output = "Name: " + player.name + "<br>";
+        output += "Description: " + player.description + "<br>";
+        output += "Hit points: " + player.hp + "<br>";
+        output += "Skills: <br>";
+        for(const[key,value] of Object.entries(player.skills) ){
+          output += "* " + key + ": " + value;
+        }
+        update_command_output(output + "<br><br>");
+      }
     }
   } else {
     if (verb == 'inventory'){
@@ -168,10 +181,7 @@ function start_game(text){
   game = new Game(jstuff);
   document.getElementById('gamename').innerHTML = game.name;
   document.getElementById('gamedescription').innerHTML = game.description;
-  update_ui();
-}
-
-function update_ui(){
+  document.getElementById('gameoutput').innerHTML += little_help_output + '<br><br>'
   update_location();
   update_command_prompt();
 }

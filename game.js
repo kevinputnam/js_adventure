@@ -88,9 +88,26 @@ class Game {
     return "You may want to rethink that.";
   }
 
+  update_skill(receiverid,values){
+    var receiver = this.things[receiverid];
+    var skill = values[0];
+    var operator = values[1];
+    var change = values[2];
+
+    if(operator == "+"){
+      receiver.skills[skill] += change;
+    }else if(operator == "-"){
+      receiver.skills[skill] -= change;
+    }
+  }
+
   //set value of key object in receiving thing
   set(receiverid,key,value){
-    this.things[receiverid].set(key,value);
+    if(key=="skills"){
+      this.update_skill(receiverid,value);
+    }else{
+      this.things[receiverid].set(key,value);
+    }
   }
 
   add_interactions(receiverid,ints){

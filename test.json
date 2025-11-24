@@ -8,7 +8,7 @@
           "action":"You try to read it.",
           "requires":["skill","elven",2],
           "requiresFail":"You can't read it, but it might be in elven (2).",
-          "description":"It says, in elven, \"the grumpy horseman likes to talk.\""
+          "description":"Thanks to your skill in reading Quenya, you can tell that it says, \"the grumpy horseman likes to talk.\" I wonder what that means."
         },
   "1" : {
            "name":"move",
@@ -58,6 +58,16 @@
           "action":"Then what do you want?",
           "name":"talk",
           "description":"Gravy, of course."
+          },
+    "8":  {
+          "action":"Can you teach me some Elvish?",
+          "name":"talk",
+          "description":"Let's do it!",
+          "effects": [["set",[20,"skills",["elven","+",1]]],["remove_interactions",[22,[8]]],["add_interactions",[22,[9]]]]
+          },
+    "9":  {"action":"I want to know more about Elvish.",
+           "name":"talk",
+           "description":"I'm a decker not a school teacher. Besides, you have better things to do."
           }
   },
   "things":
@@ -84,24 +94,26 @@
   },
   "2":{ "name": "dresser",
       "description":"Uncle Henry painted it for you. Why he chose to make it pink is beyond you, but there you have it."},
-  "3":{"name":"door",
-     "description":"It leads to the den.",
+  "3":{"name":"den",
+     "description":"It squeaks when you open it.",
      "goesTo":[0,1]},
   "4":{"name":"bed",
      "description":"It's lumpy and piled with pillows and quilts. Not what you expected, but you got used to it."},
   "5":{"name":"poster",
-     "description":"Let's Rock! It might have been cool once, but even that is debatable. Now it's just cringy."},
+     "description":"It has a photo of a cute little cat dangling from a shelf. It says, \"Hang in there!\"",
+     "canTake":true},
   "6":{"name": "TV",
      "description": "The size of a cabinet, Uncle Henry likes his TV old school. Still, there are plenty of interesting things to watch here."},
-  "7":{"name": "door",
-     "description": "The door to your room.",
+  "7":{"name": "bedroom",
+     "description": "Your inner sanctum awaits.",
      "goesTo": [0,0]},
   "8":{"name": "couch",
      "description": "It smells funny, and beware of sinking fully into it.",
      "interactions": [2]
       },
   "9":{"name": "remote",
-       "description": "Lots of buttons. Possession of the remote is a power move unlike any other."
+       "description": "Lots of buttons. Possession of the remote is a power move unlike any other.",
+       "canTake": true
       },
   "10":{"name": "cabinet",
         "description": "I wonder what is in there.",
@@ -165,13 +177,30 @@
     "actions": 1,
     "description":"Looking for the end of the circle.",
     "skills": {
-      "elven": 2
+      "elven": 1
     }
   },
   "21":{
     "name":"sign",
     "description":"It says something in a strange language. If only you could read it.",
     "interactions":[0]
+    },
+  "22":{
+    "name":"Dodger",
+    "description":"Elf, decker, mohawk. 'Nuff said.",
+    "isCharacter":true,
+    "location":[0,4],
+    "interactions":[8]
+    },
+    "23":{
+      "name":"front door",
+      "description":"Leads to the hall of the 1st floor.",
+      "goesTo":[0,4]
+    },
+    "24":{
+      "name":"1G",
+      "description":"Door to your apartment.",
+      "goesTo":[0,1]
     }
   },
   "sections":{
@@ -185,7 +214,7 @@
       "1":{
         "name":"the den",
         "description":"The TV is here. It is therefore the most interesting room in the apartment.",
-        "things":[6,7,8,9,10,11,12,13,21]
+        "things":[6,7,8,9,10,11,12,13,21,23]
       },
       "2":{"name":"the kitchen",
            "description": "This is where the magic happens.",
@@ -194,6 +223,10 @@
       "3":{"name":"the cellar",
            "description": "It smells of earth and ancient vegetables.",
            "things": [17,18]
+         },
+      "4":{"name":"the hallway",
+           "description": "Hangout for some, route to elsewhere for others.",
+           "things":[24]
          }
        }
      }
