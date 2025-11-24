@@ -198,9 +198,23 @@
       "goesTo":[0,4]
     },
     "24":{
-      "name":"1G",
+      "name":"apartment 1G",
       "description":"Door to your apartment.",
       "goesTo":[0,1]
+    },
+    "25":{
+      "name":"lobby",
+      "description":"The way most people come into the building.",
+      "goesTo":[0,5]
+    },
+    "26":{
+      "name":"hallway",
+      "description":"Your apartment is down there.",
+      "goesTo":[0,4]
+    },
+    "27":{
+      "name":"entry",
+      "description":"Everett street entrance."
     }
   },
   "sections":{
@@ -226,7 +240,11 @@
          },
       "4":{"name":"the hallway",
            "description": "Hangout for some, route to elsewhere for others.",
-           "things":[24]
+           "things":[24,25]
+         },
+      "5":{"name":"the lobby",
+           "description": "It's kind of cozy in here. Lit by electric sconces, a couple of nice leather chairs sit on either side of a coffee table. There's some magazines laying on the table. Beneath it all a worn oriental rug partially covers black and white marble tiles.",
+           "things":[26,27]
          }
        }
      }
