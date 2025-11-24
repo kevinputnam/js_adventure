@@ -39,19 +39,19 @@ html {
     overflow:  scroll;
     position: absolute;
     left: 4px;
-    top:  240px;
+    top:  10px;
     width: 480px;
-    height: 160px;
-    max-height: 160px;
+    height: 380px;
+    max-height: 380px;
     max-width: 480px;
     padding:  10px;
-    border:  1px solid #03fc3d;
-    -ms-overflow-style: none; /*hides scroll bars for ms browsers*/
-    scrollbar-width: none; /*hides scroll bars for firefox*/
+    /*border:  1px solid #03fc3d;*/
+    /*-ms-overflow-style: none; /*hides scroll bars for ms browsers*/
+    /*scrollbar-width: none; /*hides scroll bars for firefox*/
 }
 
 #gameoutput::-webkit-scrollbar {
-    display: none; /*hides scroll bars for webkit browsers*/
+    /*display: none; /*hides scroll bars for webkit browsers*/
 }
 
 #desccontainer {

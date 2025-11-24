@@ -34,16 +34,21 @@ document.onkeypress = function (e) { //basically the game loop
         switch(game.mode){
           case 'talk':
             process_convo_command(proginput.value);
+            /*update_location();
+            update_command_output();*/
             break;
           case 'fight':
             process_fight_command(proginput.value);
+            /*update_location();
+            update_command_output();*/
             break;
           default:
             process_command(proginput.value);
+            update_command_output();
         }
       }
       proginput.value = '';
-      update_ui();
+      //update_ui();
     }
 };
 
@@ -195,29 +200,31 @@ function update_command_prompt(){
 }
 
 function update_location(){
-  var descDiv = document.getElementById('currentdescription');
-  var choiceDiv = document.getElementById('currentchoices');
-  var playerDiv = document.getElementById('playerstuff');
+  var output = document.getElementById('gameoutput');
+  //var descDiv = document.getElementById('currentdescription');
+  //var choiceDiv = document.getElementById('currentchoices');
+  //var playerDiv = document.getElementById('playerstuff');
 
   switch(game.mode){
   case 'talk':
-    descDiv.innerHTML = "You are talking to " + game.things[game.receiverID].name;
-    choiceDiv.innerHTML = game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>';
+    output.innerHTML += "You are talking to " + game.things[game.receiverID].name;
+    output.innerHTML += game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>';
     break
   case 'fight':
     console.log("Not Implemented.")
     break
   default:
-    descDiv.innerHTML = game.location_description();
+    output.innerHTML += game.location_description();
     var loc_things = "You see:<br><br>";
     for(const[key,value] of Object.entries(game.location_things())){
       loc_things += "- " + value + "<br>";
     }
-    choiceDiv.innerHTML = loc_things;
+    output.innerHTML += loc_things;
   }
   var player_stuff = game.things[game.playerid].name + "'s stuff:<br><br>"
   for(const[key,value] of Object.entries(game.player_inventory())){
     player_stuff += "- " + value + "<br>"
   }
-  playerDiv.innerHTML = player_stuff;
+  output.innerHTML += player_stuff;
+  output.scrollTop = output.scrollHeight
 }
