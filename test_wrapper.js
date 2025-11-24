@@ -34,17 +34,17 @@ document.onkeypress = function (e) { //basically the game loop
         switch(game.mode){
           case 'talk':
             process_convo_command(proginput.value);
-            /*update_location();
-            update_command_output();*/
+            update_location();
+            update_command_prompt();
             break;
           case 'fight':
             process_fight_command(proginput.value);
-            /*update_location();
-            update_command_output();*/
+            update_location();
+            update_command_prompt();
             break;
           default:
             process_command(proginput.value);
-            update_command_output();
+            update_command_prompt();
         }
       }
       proginput.value = '';
@@ -87,9 +87,11 @@ function process_command(command){
             switch(verb){
               case 'go':
                 game.go(thingid);
+                update_location();
                 break;
               case 'talk':
                 game.interact(game.playerid,thingid,verb);
+                update_location();
                 break
               case 'look':
                 var out_str = thing.look() + " ";
@@ -124,12 +126,7 @@ function process_command(command){
       }
       update_command_output(invout + "<br>");
     } else if (verb == 'look'){
-      var lookOut = game.location_description() + "<br>";
-      lookOut += "You see: <br><br>";
-      for(const[key,value] of Object.entries(game.location_things())){
-        lookOut += "- " + value + "<br>";
-      }
-      update_command_output(lookOut + "<br>");
+      update_location();
     }
   }
 }
@@ -147,6 +144,7 @@ function get_local_npcs(){
 function update_command_output(cmdout){
   var output = document.getElementById('gameoutput');
   output.innerHTML = output.innerHTML + cmdout;
+  console.log(cmdout);
   output.scrollTop = output.scrollHeight
 }
 
@@ -201,13 +199,10 @@ function update_command_prompt(){
 
 function update_location(){
   var output = document.getElementById('gameoutput');
-  //var descDiv = document.getElementById('currentdescription');
-  //var choiceDiv = document.getElementById('currentchoices');
-  //var playerDiv = document.getElementById('playerstuff');
 
   switch(game.mode){
   case 'talk':
-    output.innerHTML += "You are talking to " + game.things[game.receiverID].name;
+    output.innerHTML += "You are talking to " + game.things[game.receiverID].name + '. ';
     output.innerHTML += game.interact(game.playerid,game.receiverID,'talk').replaceAll('\n','<br>')+'<br><br>';
     break
   case 'fight':
@@ -221,10 +216,5 @@ function update_location(){
     }
     output.innerHTML += loc_things;
   }
-  var player_stuff = game.things[game.playerid].name + "'s stuff:<br><br>"
-  for(const[key,value] of Object.entries(game.player_inventory())){
-    player_stuff += "- " + value + "<br>"
-  }
-  output.innerHTML += player_stuff;
   output.scrollTop = output.scrollHeight
 }

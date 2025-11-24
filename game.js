@@ -185,7 +185,7 @@ class Game {
     if (output != ""){
       promptCount ++;
       this.conversationPrompts.push('Quit conversation.');
-      output = "What do you want to do?\n" + output + promptCount + ". Quit conversation.";
+      output = "What do you want to say?\n" + output + promptCount + ". Quit conversation.";
     }
     return output;
   }
