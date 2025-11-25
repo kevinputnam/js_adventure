@@ -24,7 +24,7 @@ You say, "How are you?"<br>
 He says, "Well, I'd be better if you made dinner."</blockquote>
 The "help" command should work all the time (even in conversation mode).`
 
-little_help_output = 'Enter "help" at any time for list of commands and play help.'
+little_help_output = 'Type "help" at any time for a list of commands and play help.'
 
 document.onkeypress = function (e) { //basically the game loop
     if (e.keyCode == 0x0D){ //return key
@@ -55,6 +55,21 @@ document.onkeypress = function (e) { //basically the game loop
 
 function print_game_help(command){
   update_command_output(help_output + "<br><br>");
+}
+
+function get_character_info(character){
+  var output = "Name: " + character.name + "<br>";
+  output += "Description: " + character.description + "<br>";
+  output += "Hit points: " + character.hp + "<br>";
+  output += "Abilities: <br>";
+  for(const[key,value] of Object.entries(character.abilities)){
+    output += "* " + key + ": " + value + "<br>";
+  }
+  output += "Skills: <br>";
+  for(const[key,value] of Object.entries(character.skills) ){
+    output += "* " + key + ": " + value + "<br>";
+  }
+  return output
 }
 
 function process_convo_command(command){
@@ -121,15 +136,11 @@ function process_command(command){
     } else if (verb == 'look'){
       if (nounWords == 'me'){
         var player = game.things[game.playerid];
-        var output = "Name: " + player.name + "<br>";
-        output += "Description: " + player.description + "<br>";
-        output += "Hit points: " + player.hp + "<br>";
-        output += "Skills: <br>";
-        for(const[key,value] of Object.entries(player.skills) ){
-          output += "* " + key + ": " + value;
-        }
+        output = get_character_info(player);
         update_command_output(output + "<br><br>");
       }
+    } else {
+      update_command_output("What to who?<br>");
     }
   } else {
     if (verb == 'inventory'){
@@ -140,6 +151,8 @@ function process_command(command){
       update_command_output(invout + "<br>");
     } else if (verb == 'look'){
       update_location();
+    }else{
+      update_command_output("What?<br>");
     }
   }
 }
