@@ -46,8 +46,8 @@
     "5":  {
            "action":"How are you?",
            "name": "talk",
-           "description": "Well, I'd be better if you made dinner.",
-           "effects":[["add_interactions",[19,[7]]],["remove_interactions",[19,[5]]]]
+           "description": "Now that you mention it, I'm hungry. You hungry?",
+           "effects":[["add_interactions",[19,[7,10]]],["remove_interactions",[19,[5]]]]
           },
     "6":  {
           "action":"Can I go to the cellar?",
@@ -55,9 +55,10 @@
           "description":"Sure. If you can find it."
           },
     "7":  {
-          "action":"Then what do you want?",
+          "action":"Yeah, I could eat. What do you want?",
           "name":"talk",
-          "description":"Gravy, of course."
+          "description":"This is one of the great mysteries of the world. I have no idea. I kind of feel like having a coffee, though.",
+          "effects":[["remove_interactions",[19,[7]]]]
           },
     "8":  {
           "action":"Can you teach me some Elvish?",
@@ -68,6 +69,11 @@
     "9":  {"action":"I want to know more about Elvish.",
            "name":"talk",
            "description":"I'm a decker not a school teacher. Besides, you have better things to do."
+          },
+    "10": {"action":"I wouldn't mind a nice vanilla latte.",
+           "name":"talk",
+           "description":"Yessss! Espresso is life!",
+           "effects": [["remove_interactions",[19,[10,7]]]]
           }
   },
   "things":

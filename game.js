@@ -121,7 +121,9 @@ class Game {
     var receiver = this.things[receiverid];
     for (var i of ints){
       var index = receiver.interactions.indexOf(i);
-      receiver.interactions.splice(index, 1);
+      if (index != -1){
+        receiver.interactions.splice(index, 1);
+      }
     }
   }
 

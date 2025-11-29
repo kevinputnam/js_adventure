@@ -24,7 +24,7 @@ You say, "How are you?"<br>
 He says, "Well, I'd be better if you made dinner."</blockquote>
 The "help" command should work all the time (even in conversation mode).`
 
-little_help_output = 'Type "help" at any time for a list of commands and play help.'
+little_help_output = 'Type "help" at any time for a list of commands and how to play.'
 
 document.onkeypress = function (e) { //basically the game loop
     if (e.keyCode == 0x0D){ //return key
