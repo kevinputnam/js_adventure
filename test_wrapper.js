@@ -122,10 +122,14 @@ function process_command(command){
               default:
                 update_command_output(game.interact(game.playerid,thingid,verb).replaceAll('\n','<br>')+"<br><br>");
             }
+            // there was a match so stop processing
+            return;
           }
         }
       }
     }
+    // If the noun isn't here it might be something in the player's
+    // inventory or themself
     if (verb == 'put'){
       for(const thingid of game.things[game.playerid].things){
         var thing = game.things[thingid];
