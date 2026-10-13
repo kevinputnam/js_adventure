@@ -76,7 +76,7 @@ function process_convo_command(command){
   var selection = parseInt(command);
   if(selection == game.conversationPrompts.length){
     game.mode = "";
-    update_command_output('You leave the converstaion.<br><br>');
+    update_command_output('You leave the conversation.<br><br>');
     return;
   }else{
     update_command_output(game.interact(game.playerid,game.receiverID,game.conversationPrompts[selection - 1]).replaceAll('\n','<br>')+"<br><br>");
