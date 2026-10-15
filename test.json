@@ -220,7 +220,13 @@
     },
     "27":{
       "name":"entry",
-      "description":"Everett street entrance."
+      "description":"Everett street entrance.",
+      "goesTo":[0,6]
+    },
+    "28":{
+      "name":"The Rappahannock",
+      "description":"In there somewhere is your apartment.",
+      "goesTo":[0,5]
     }
   },
   "sections":{
@@ -251,6 +257,10 @@
       "5":{"name":"the lobby",
            "description": "It's kind of cozy in here. Lit by electric sconces, a couple of nice leather chairs sit on either side of a coffee table. There's some magazines laying on the table. Beneath it all a worn oriental rug partially covers black and white marble tiles.",
            "things":[26,27]
+         },
+      "6":{"name":"Everett Street",
+           "description":"A quirky little street filled with lots of nooks to explore.",
+           "things":[28]
          }
        }
      }
